@@ -1,0 +1,24 @@
+--- st.c
++++ st.c
+@@ -2630,15 +2513,14 @@ resettitle(void)
+ void
+ drawregion(int x1, int y1, int x2, int y2)
+ {
+-	int y, L;
++	int y;
+ 
+-	L = TLINEOFFSET(y1);
+ 	for (y = y1; y < y2; y++) {
+-		if (term.dirty[y]) {
+-			term.dirty[y] = 0;
+-			xdrawline(TSCREEN.buffer[L], x1, y, x2);
+-		}
+-		L = (L + 1) % TSCREEN.size;
++		if (!term.dirty[y])
++			continue;
++
++		term.dirty[y] = 0;
++		xdrawline(term.line[y], x1, y, x2);
+ 	}
+ }
+ 
